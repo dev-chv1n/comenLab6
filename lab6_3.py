@@ -1,18 +1,16 @@
 import RPi.GPIO as GPIO
 import time
-LED = 3
-SW = 17
+LED = 11
+SW = 13
 count = 0
 ledState = True
-GPIO.setmode(GPIO.BCM)
-#GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-#GPIO.setup(LED, GPIO.OUT)
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(LED, GPIO.OUT)
 
 try:
     while True:
-        if GPIO.wait_for_edge(SW, GPIO.FALLING):
+        if GPIO.wait_for_edge(SW, GPIO.RISING):
             if ledState == True:
                 GPIO.output(LED, ledState)
                 ledState = 0

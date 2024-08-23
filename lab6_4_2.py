@@ -1,34 +1,38 @@
 import RPi.GPIO as GPIO
 import time
-RED = 2
-GREEN = 3
-BLUE = 4
+RED = 40
+GREEN = 38
+BLUE = 36
 
-SW = 17
+SW = 13
 pressCount = 0
-bool redLedState = 0
-bool greenLedState = 0
-bool blueLedState = 0
+redLedState = True
+greenLedState = True
+blueLedState = True
 
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(LED, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.setup(BLUE, GPIO.OUT)
 
 try:
     while True:
-        if GPIO.wait_for_edge(SW, GPIO.FALLING):
+        if GPIO.wait_for_edge(SW, GPIO.RISING):
             pressCount += 1
+            print("presscount = " , pressCount)
+            print(f"redLedState: {redLedState}  greenLedState: {greenLedState}  blueLedState: {blueLedState}")
             GPIO.output(RED,redLedState)
-            if pressCount % 4:
-                redLedState != redLedState
+            if pressCount % 4 == 0:
+                redLedState = not redLedState
                 
-            GPIO.output(GRREEN,greenLedState)
-            if pressCount % 2:
-                greenLedState != greenLedState
+            GPIO.output(GREEN,greenLedState)
+            if pressCount % 2 == 0:
+                greenLedState = not greenLedState
                 
-            GPIO.output(GRREEN,blueLedState)
-            if pressCount % 1:
-                blueLedState != blueLedState
+            GPIO.output(BLUE,blueLedState)
+            if pressCount % 1 == 0 :
+                blueLedState = not blueLedState
 
 
 except KeyboardInterrupt:
